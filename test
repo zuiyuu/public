@@ -1,1 +1,105 @@
-test
+filename1	8609s Executed-Willow Springs.txt																					
+datatypeflag1	loop																					
+pagenumber1	double																					
+getdatatype1	block																					
+startString1	Form 8609 (Rev. 05-2018)																					
+endString1	-----------page number																					
+datarule1	rownum1	rownum2	iftype	setvalue	condition	dataretype	datare	format	datastartkey	dataendkey	formatitemin	formatitemout										
+item1	10	none	none	none	none	none	none	none	none	none	none	none										
+item2	1	2	merge	none	none	sub	\d{4}[\s{1}|,|.]	none	none	none	none	none										
+item3	1	none	numberformat	none	none	findall	\d{4}	{},{},{}, and {}	none	none	none	none										
+item4	17	none	none	none	none	none	none	none	none	none	none	none										
+filename2	Market Study - Mt. Vernon, IL IHDA MS 9.2017.txt																					
+datatypeflag2	order																					
+pagenumber2	block																					
+getdatatype2	block																					
+startString2	Parking:																					
+endString2	Year Built/Anticipated Date of Completion:																					
+datarule2	rownum1	rownum2	iftype	setvalue	condition	dataretype	datare	format	datastartkey	dataendkey	formatitemin	formatitemout										
+item5	1	none	none	none	none	findall	\d+	none	none	none	none	none										
+filename3	Market Study - Mt. Vernon, IL IHDA MS 9.2017.txt																					
+datatypeflag3	order																					
+pagenumber3	block																					
+getdatatype3	block																					
+startString3	The Subject site is currently zoned 																					
+endString3	 (																					
+datarule3	rownum1	rownum2	iftype	setvalue	condition	dataretype	datare	format	datastartkey	dataendkey	formatitemin	formatitemout										
+item6	1	none	none	none	none	findall	.{1}-.{1}	none	none	none	none	none										
+filename4	Market Study - Mt. Vernon, IL IHDA MS 9.2017.txt																					
+datatypeflag4	order																					
+pagenumber4	block																					
+getdatatype4	block																					
+startString4	Size & Shape:																					
+endString4	 acres																					
+datarule4	rownum1	rownum2	iftype	setvalue	condition	dataretype	datare	format	datastartkey	dataendkey	formatitemin	formatitemout										
+item7	1	none	none	none	none	findall	-?[0-9]+\.[0-9]*	none	none	none	none	none										
+filename5	LPA-Initial Limited Partnership Agreement- Hampstead Willow Springs Partners, LP(1).txt																					
+datatypeflag5	order																					
+pagenumber5	block																					
+getdatatype5	block																					
+startString5	LIMITED																					
+endString5	WITNESSETH:																					
+datarule5	rownum1	rownum2	iftype	setvalue	condition	dataretype	datare	format	datastartkey	dataendkey	formatitemin	formatitemout										
+item8	1	none	none	none	none	findall	.*?	none	PARTNERSHIP AGREEMENT OF	This Limited Partnership Agreement	none	none										
+filename6	2022-2023  Rent Schedule - Willow Springs executed.txt																					
+datatypeflag6	loop																					
+pagenumber6	block																					
+getdatatype6	line																					
+datasplit6	 +																					
+startString6	(Col. 2 x Col. 7)																					
+endString6	Monthly Contract Rent Potential																					
+datarule6	rownum1	rownum2	iftype	setvalue	condition	dataretype	datare	format	datastartkey	dataendkey	formatitemin	formatitemout										
+item9	0	1	replace	 BR	Bedroom	none	none	none	none	none	none	none										
+item10	2	none	none	none	none	none	none	none	none	none	none	none										
+item11	3	none	none	none	none	none	none	none	none	none	none	none										
+item12	5	none	none	none	none	none	none	none	none	none	none	none										
+item13	none	none	setoutputvalue	8	8	none	none	none	none	none	none	none										
+filename6	Market Study - Mt. Vernon, IL IHDA MS 9.2017.txt																					
+datatypeflag6	block																					
+pagenumber6	block																					
+getdatatype6	alltext																					
+startString6	DEVELOPER'S PROPOSED UNIT MIX AND RENTS																					
+endString6	Target Tenancy:																					
+datarule6	rownum1	rownum2	iftype	setvalue	condition	dataretype	datare	format	datastartkey	dataendkey	formatitemin	formatitemout										
+item9	0	0	none	none	none	findall	(\d+%)	none	none	 AMI	none	none										
+filename7	2022-2023  Rent Schedule - Willow Springs executed.txt																					
+datatypeflag7	loop																					
+pagenumber7	block																					
+getdatatype7	line																					
+datasplit7	 +																					
+startString7	(Col. 2 x Col. 7)																					
+endString7	Monthly Contract Rent Potential																					
+datarule7	rownum1	rownum2	iftype	setvalue	condition	dataretype	datare	format	datastartkey	dataendkey	formatitemin	formatitemout										
+item10	0	1	replace	 BR	Bedroom	none	none	none	none	none	none	none										
+item11	2	none	none	none	none	none	none	none	none	none	none	none										
+item12	3	none	none	none	none	none	none	none	none	none	none	none										
+item13	5	none	none	none	none	none	none	none	none	none	none	none										
+item14	none	none	setoutputvalue	8	7	none	none	none	none	none	none	none										
+item15	0	1	replace	 Bedroom	Bedroom	none	none	none	none	none	none	none										
+filename8	Tax Bill- WIL-RE Tax Bill (2019-20).txt																					
+datatypeflag8	order																					
+pagenumber8	block																					
+getdatatype8	block																					
+datasplit8	block																					
+startString8	BOB WATT - 																					
+endString8	   																					
+datarule8	rownum1	rownum2	iftype	setvalue	condition	dataretype	datare	format	datastartkey	dataendkey	formatitemin	formatitemout										
+item50	1	none	none	none	none	findall	.*	none	BOB WATT - 	   	none	none										
+filename9	Tax Bill- WIL-RE Tax Bill (2019-20).txt																					
+datatypeflag9	order																					
+pagenumber9	block																					
+getdatatype9	block																					
+datasplit9	block																					
+startString9	DUE DATE																					
+endString9	page number 1																					
+datarule9	rownum1	rownum2	iftype	setvalue	condition	dataretype	datare	format	datastartkey	dataendkey	formatitemin	formatitemout										
+item51	0	1	mergeformat	none	or	findall	\d+[/]\d+[/]\d{4}	{} & {}	none	none	%m/%d/%Y	%B %d										
+filename10	8609s Executed-Willow Springs.txt																					
+datatypeflag10	order																					
+pagenumber10	block																					
+getdatatype10	list																					
+startString10	page number 1   																					
+endString10	page number 2   																					
+datarule10	rownum1	rownum2	iftype	setvalue	condition	dataretype	datare	format	datastartkey	dataendkey	formatitemin	formatitemout										
+item52	20	none	none	none	none	findall	\n	none	Form 8609 (Rev. 05-2018)	-----------page number	none	none										
+item53	9	none	none	none	none	findall	\n	none	Form 8609 (Rev. 05-2018)	-----------page number	none	none										
