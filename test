@@ -289,3 +289,23 @@ if __name__ == '__main__':
     # parse(pdfpath, tmpfilepath, pdffile, txtfile,2)
     parseAll(pdfpath, tmpfilepath, pdffilepath, txtfile,txtflag)
     adjust(tmpfilepath, txtfile,1)
+    
+    No.	filetype	fileindexnumber	rowindex	colindex	filename
+1	Audit	fileindex1	4	6	Audit- Hampstead Willow Springs Partners L.P. Final 21.pdf
+2	HAP Renewal Contract	fileindex2	5	6	HAP Renewal Contract - Willow Springs (eff 11-1-18).pdf
+3	REAC Report	fileindex3	6	6	Willow Springs REAC Report 2022.pdf
+4	Settlement Statement	fileindex4	7	6	Settlement Statement- WIL-Final Settlement Statement (rev).pdf
+5	MOR Summary Report	fileindex5	8	6	MOR Summary Report - Willow Springs Apts. (2021).pdf
+6	MOR Report	fileindex6	9	6	MOR Report - Willow Springs Apts. (2021).pdf
+7	Loan Agreement	fileindex7	10	6	Loan Agreement.pdf
+8	Agreement of Limited Partnership	fileindex8	11	6	LPA-Willow Amended  Restated Agreement of Limited Partnership (9-24-18).pdf
+9	Management Agreement	fileindex9	12	6	Management Agreement- Willow Springs (10-19-17).pdf
+10	EIN Letter	fileindex10	13	6	
+11	HAP Contract	fileindex11	14	6	
+12	Market Study	fileindex12	15	6	
+13	Survey	fileindex13	16	6	
+14	Rent Schedule	fileindex14	17	6	
+15	Tax Bill	fileindex15	18	6	
+16	8609s Executed	fileindex16	19	6	
+17	Amended  Restated Agreement	fileindex17	20	6	LPA-Willow Amended  Restated Agreement of Limited Partnership (9-24-18).pdf
+
