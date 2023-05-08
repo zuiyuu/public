@@ -1,311 +1,78 @@
-######################################
-# tesseract OCR
-
-from PIL import Image
-import pytesseract
-
-# from paddleocr import PaddleOCR
-
-def img_to_str_tesseract(image_path, lang='chi_sim'):
-    return pytesseract.image_to_string(Image.open(image_path), lang)
-  
-# def img_to_str_tesseract(image_path, lang='chi_sim'):
-#     ocr=PaddleOCR(use_angle_cls = True,use_gpu= False) #使用CPU预加载，不用GPU
-#     text=ocr.ocr(image_path,cls=True)                     #打开图片文件
-#     # return ''.join(text)
-#     #打印所有文本信息
-#     retList = []
-#     for t in text[0]:
-#         # print(t[1][0])
-#         retList.append(t[1][0])
-#     return '\n'.join(retList)
-######################################
-# # 百度 OCR
-
-# from aip import AipOcr
-
-# config = {
-#     'appId': '',
-#     'apiKey': '',
-#     'secretKey': ''
-# }
-
-# client = AipOcr(**config)
-
-# def img_to_str_baidu(image_path):
-#     with open(image_path, 'rb') as fp:
-#         image = fp.read()
-#         result = client.basicGeneral(image)
-#         if 'words_result' in result:
-#             return '\n'.join([w['words'] for w in result['words_result']])
-#     return ""
-
-######################################
-# 解析PDF文件
-
-import time
-import re
-import os
-import sys
-import numpy as np
-import pdf2image
-import pdfplumber
-import fitz
-
-currentDirectory  =  os.getcwd()
-
-OCR_ONLINE = False
-
-# 去掉文中多余的回车
-def adjust(inpath, outpath, adjustflag):
-    f = open(inpath,encoding='utf8')
-    lines = f.readlines()
-    arr = [len(line) for line in lines]
-    length = np.median(arr) # 行字符数中值
-    
-    string = ""
-    for line in lines:
-        if (len(line) >= length and line[-1]=='\n') and adjustflag == 0:
-            string += line[:-1] # 去掉句尾的回车
-        elif line == '-----------\n':
-            pass
-        elif line.replace(' ','') == '\n':
-            pass
-        else:
-            string += line
-    write_file(outpath, string, 'w')
-    return
-
-# 写入文件
-def write_file(path, text, ftype, debug=False):
-    with open(path, ftype, encoding='utf-8') as f:
-        if debug:
-            print("write", len(text))
-        f.write(text)
-        f.close()
-
-# 删除文件  
-def remove(path):
-    if not os.path.exists(path):
-        return
-    if os.path.isfile(path):
-        os.remove(path)
-        return
-    dirs = os.listdir(path)
-    for f in dirs:
-        file_name = os.path.join(path, f)
-        if os.path.isfile(file_name):
-            os.remove(file_name)
-        else:
-            remove(file_name)
-    os.rmdir(path)
-
-# 解析PDF文件
-# pdftype f：fitz包利用  n：pdfplumber包利用
-def parse(inpath, tmpdir, pdffile, outpath, txtflag, pdftype='t'):
-    remove(tmpdir) # 清除临时目录 
-    os.mkdir(tmpdir)
-    remove(outpath) # 清除输出文件
-    # pdftoimage = pdf2image()
-    
-    inputfilepath = os.path.join(inpath, pdffile)
-
-    t0 = time.perf_counter()
-    if (pdftype == 'f'):
-        doc = fitz.open(inputfilepath)
-    else:
-        doc = pdfplumber.open(inputfilepath)
-    # lenXREF = doc.xrefLength()
-    print("文件名:{}, 页数: {}, 对象: {}".format(inputfilepath, len(doc), 10 - 1))
-
-    imgcount = 0
-    testFlag = False
-    for i,page in enumerate(doc):
-        t1 = time.perf_counter()
-        if (txtflag == 0 or txtflag == 1):
-            # 文字
-            if (pdftype == 'f'):
-                text = page.get_text()
-            else:
-                text = page.extract_text()
-            if len(text) > 0:
-                write_file(outpath, text, 'a')
-                write_file(outpath, '\n' + '-----------page number ' + str(i+1) + '   \n', 'a')
-                testFlag = True
-    if (testFlag == False):
-        # 图片
-        imgPathList = pdf2image.pdftoimagesMain(inputfilepath, tmpdir)
-        for item in imgPathList:
-            xref = item
-            # 如果pix.n<5,可以直接存为PNG
-            os.path.pardir
-            path = xref #os.path.join(tmpdir, new_name)
-
-            if OCR_ONLINE:
-                text = ''#img_to_str_baidu(path)
-            else:
-                text = img_to_str_tesseract(path)
-            # print("img->text", text)
-            write_file(outpath, text, 'a')
-            write_file(outpath, '\n' + '-----------page number ' + str(imgcount+1) + '   \n', 'a')
-            imgcount += 1
-        # elif (txtflag == 0 or txtflag == 2):
-        #     # 图片
-        #     imgPathList = pdf2image.pdftoimagesMain(inpath, tmpdir)
-        #     for item in imgPathList:
-        #         xref = item
-        #         # 如果pix.n<5,可以直接存为PNG
-        #         os.path.pardir
-        #         path = xref #os.path.join(tmpdir, new_name)
-
-        #         if OCR_ONLINE:
-        #             text = ''#img_to_str_baidu(path)
-        #         else:
-        #             text = img_to_str_tesseract(path)
-        #         print("img->text", text)
-        #         write_file(outpath, text, 'a')
-        #         write_file(outpath, '\n' + '-----------' + '\n', 'a')
-        #         imgcount += 1
+returnMsg.append("输出项目[" + str(rownum) + "]行[" + str(colnum) + "]列的内容没有找到对应的信息，请确认.")
 
 
-        print("page {} 运行时间:{}s".format(i, {t1 - t0}))
+ if (self.selectInputfilepath == ''):
+            winmsg = "请选择工作目录和出力文件"
+            result = showinfo('提示', winmsg)
+            self.runbutton['state'] = tk.NORMAL
+            return
         
-        
-        
+        if (r_value.get() == 1) :
+            # 参数2是【0】表示从新做成所有转换文件
+            pdfminerTools.mainPdfTools(self.selectInputfilepath,'0')
+        elif (r_value.get() == 2) :
+            # 参数2是【1】表示不从新做成已有转换文件
+            pdfminerTools.mainPdfTools(self.selectInputfilepath,'1')
+            
 
-# 解析PDF文件
-# pdftype f：fitz包利用  n：pdfplumber包利用
-def parseAll(inpath, tmpdir, pdffile, outfilepath, txtflag, pdftype='t'):
-    remove(tmpdir) # 清除临时目录 
-    os.mkdir(tmpdir)
-    remove(outfilepath) # 清除输出文件
-    # pdftoimage = pdf2image()
+# 主处理
+# 参数1：工作目录指定
+# 参数2：是否从新做成标志
+def mainPdfTools(inputPath,newflag):
+    workDirectory = inputPath
     
-    inputfilepath = os.path.join(inpath, pdffile)
-
-    t0 = time.perf_counter()
-    if (pdftype == 'f'):
-        doc = fitz.open(inputfilepath)
-    else:
-        doc = pdfplumber.open(inputfilepath)
-    # lenXREF = doc.xrefLength()
-    print("文件名:{}, 页数: {}, 对象: {}".format(inputfilepath, len(doc), 10 - 1))
-
-    imgcount = 0
-    testFlag = False
-    # 该当PDF文件的所有图片取得，所有页面将作为图片处理
-    imgPathList = pdf2image.pdftoimagesMain(inputfilepath, tmpdir)
-    for i,page in enumerate(doc):
-        t1 = time.perf_counter()
-        if (txtflag == 0 or txtflag == 1):
-            # 文字内容
-            if (pdftype == 'f'):
-                text = page.get_text()
-            else:
-                text = page.extract_text()
-                
-            if len(text) > 0:
-                write_file(outfilepath, text, 'a')
-                write_file(outfilepath, '\n' + '-----------text page number ' + str(i+1) + '   \n', 'a')
-        
-        if (txtflag == 0 or txtflag == 2):
-            text = ''
-            # 图片内容
-            itempath = imgPathList[i]            
-            if OCR_ONLINE:
-                text = ''#img_to_str_baidu(path)
-            else:
-                text = img_to_str_tesseract(itempath)
-            if len(text) > 0:
-                write_file(outfilepath, text, 'a')
-                write_file(outfilepath, '\n' + '-----------img page number ' + str(i+1) + '   \n', 'a')
-
-
-        print("page {} 运行时间:{}s".format(i, {t1 - t0}))
-        
-# txtflag 0 txt img  1 txt  2 img
-# adjustflag 0 去除回车 1 不去除
-def pdfconvtotxt(folderpath,pdffile,tmpdir,txtflag=0,adjustflag=1):
-    tmpfile = pdffile.replace('.pdf','.tmp')
-    outfilepath = pdffile.replace('.pdf','.txt')
-    # parse(pdffile, tmpdir, tmpfile, txtflag)
+    # 希查看是否已经存在备份目录，如果有则删除，没有则新建目录
+    paralpDirectory = "%s\\%s" %(workDirectory,ruleFileName)
     
+    basePath = "base"
+    baseParalpDirectory = "%s\\%s" %( workDirectory + basePath,ruleFileName)
+
+    # 拷贝原始规则文件
+    shutil.copy(baseParalpDirectory, paralpDirectory)
     
-    tmpfilepath = tmpdir
-    parseAll(folderpath, tmpfilepath, pdffile,  tmpfile,txtflag)
-    # if (adjustflag == 0):
-    adjust(tmpfile, outfilepath, adjustflag)
+    # exeFlag  0 全部执行  1 pdf 转 Txt  2 检索关键字  3 读取规则文件
+    exeFlag = 0
+    if (exeFlag == 0 or exeFlag == 1) :
+        folderList,fileList,fileNameList = getFiledList(workDirectory,'.pdf')
+        # 根据文件类型匹配所需要的文件，把文件索引信息映射到对应的文件名
+        retmsg = setPdfFileToExcel(fileNameList , paralpDirectory)
+        if (len(retmsg) > 0):
+            print(retmsg)
+            # return
+            # 处理中出现错误，停止处理
+            exit()
 
-def detectUTF8(all_lines):
-    state = 0
-    line_num = 0
-    # file_obj = open(file_name)
-    # all_lines = file_obj.readlines()
-    # file_obj.close()
-    lineList = []
-    for line in all_lines:
-        line_num += 1
-        line_len = len(line)
-        for index in range(line_len):
-            if state == 0:
-                if ord(line[index])&0x80 == 0x00:#上表中的第一种情况
-                    state = 0
-                elif ord(line[index])&0xE0 == 0xC0:#上表中的第二种情况
-                    state = 1
-                elif ord(line[index])&0xF0 == 0xE0:#上表中的第第三种
-                    state = 2
-                elif ord(line[index])&0xF8 == 0xF0:#上表中的第第四种
-                    state = 3
-                else:
-                    print (str(line_num)+" isn't a utf8 file,line:\t")
-                    # sys.exit(1)
-                    continue
-                lineList.append(line[index])
-            else:
-                if not ord(line[index])&0xC0 == 0x80:
-                    print (str(line_num) + " isn't a utf8 file in line:\t")
-                    # sys.exit(1)
-                    continue
-                lineList.append(line[index])
-                state -= 1
-    return ''.join(lineList)
+        # pdf文件内容转换
+        pdfconvThread(newflag)
 
-if __name__ == '__main__':
-    # if len(sys.argv) < 2:
-    #     print("请将pdf文件路径作为参数")
-    #     sys.exit(-1)
-    pdfpath = input("请将pdf文件路径作为参数 ： ") #sys.argv[1]
-    pdffile = input("请将pdf文件名作为参数 ： ") #sys.argv[1]
-    # txtflag
-    txtflag = input("请输入文本要提取的类型，0全部 1文字 2图片 不入力0： ") #sys.argv[1]
-    if pdffile < '':
-        print("请将pdf文件路径作为参数 ： ")
-        sys.exit(-1)
-    if ((txtflag == '') or (txtflag is None)):
-        txtflag = 0
-    tmpfilepath = os.path.join(pdfpath, 'tmp')
-    pdffilepath = os.path.join(pdfpath, pdffile)
-    txtfile = os.path.join(pdfpath, pdffile.replace('.pdf','.txt')) 
-    # parse(pdfpath, tmpfilepath, pdffile, txtfile,2)
-    parseAll(pdfpath, tmpfilepath, pdffilepath, txtfile,txtflag)
-    adjust(tmpfilepath, txtfile,1)
-    
-    No.	filetype	fileindexnumber	rowindex	colindex	filename
-1	Audit	fileindex1	4	6	Audit- Hampstead Willow Springs Partners L.P. Final 21.pdf
-2	HAP Renewal Contract	fileindex2	5	6	HAP Renewal Contract - Willow Springs (eff 11-1-18).pdf
-3	REAC Report	fileindex3	6	6	Willow Springs REAC Report 2022.pdf
-4	Settlement Statement	fileindex4	7	6	Settlement Statement- WIL-Final Settlement Statement (rev).pdf
-5	MOR Summary Report	fileindex5	8	6	MOR Summary Report - Willow Springs Apts. (2021).pdf
-6	MOR Report	fileindex6	9	6	MOR Report - Willow Springs Apts. (2021).pdf
-7	Loan Agreement	fileindex7	10	6	Loan Agreement.pdf
-8	Agreement of Limited Partnership	fileindex8	11	6	LPA-Willow Amended  Restated Agreement of Limited Partnership (9-24-18).pdf
-9	Management Agreement	fileindex9	12	6	Management Agreement- Willow Springs (10-19-17).pdf
-10	EIN Letter	fileindex10	13	6	
-11	HAP Contract	fileindex11	14	6	
-12	Market Study	fileindex12	15	6	
-13	Survey	fileindex13	16	6	
-14	Rent Schedule	fileindex14	17	6	
-15	Tax Bill	fileindex15	18	6	
-16	8609s Executed	fileindex16	19	6	
-17	Amended  Restated Agreement	fileindex17	20	6	LPA-Willow Amended  Restated Agreement of Limited Partnership (9-24-18).pdf
+        folderList,fileList,fileNameList = getFiledList(workDirectory,'.xlsx')
+        # 根据文件类型匹配所需要的文件，把文件索引信息映射到对应的文件名
+        retmsg = setPdfFileToExcel(fileNameList , paralpDirectory)
+        if (len(retmsg) > 0):
+            print(retmsg)
+            # return
+            # 处理中出现错误，停止处理
+            exit()
+            
+        # 检查所需要的所有入力文件是否存在
+        errorMsgList = checkSetPdfFileToExcel(paralpDirectory)
+        if (len(errorMsgList) > 0):
+            print(errorMsgList)
+            # return
+            # 处理中出现错误，停止处理
+            exit()
+            
+        # 根据filetype设定文件名
+        setInputFileName(paralpDirectory)
 
+    # 根据读取规则文件，添补所需信息
+    if (exeFlag == 0 or exeFlag == 3) :
+        # 1，先处理EXCEL文件信息读取
+        readsetExcel(paralpDirectory,workDirectory)
+
+        # 2，再处理PDF文件信息读取
+        ruleList,outList = readPdf(paralpDirectory)
+        setPdfData(ruleList,outList,workDirectory)
+
+    time2 = time.time()
+    print("总共消耗时间为:", time2 - time1)
